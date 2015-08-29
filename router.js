@@ -18,7 +18,7 @@ var Route = {
 	*用于去除 开始与结束的斜杠
 	*/
 	'clearSlashes': function(path){
-		return path.toString()().replace(/\/$/,'').replace(/^\//,''),
+		return path.toString()().replace(/\/$/,'').replace(/^\//,'');
 	},
 	/**
 	*获取当前url
@@ -97,7 +97,7 @@ var Route = {
 	*改变urls
 	*/
 	'change':function(path){
-		path =path? this.clearSlashes(path)|| '';
+		path =path? this.clearSlashes(path): '';
 		//如果是 history模式
 		if(this.mode == 'history'){
 			hitory.pushState(null,null,this.root + path);
@@ -108,7 +108,7 @@ var Route = {
 			window.location.href = window.location.href.replace(/#(.*)$/ , '' ) +'#' + path
 		}
 		return this;
-	}
+	},
 	/**
 	*检测变化(非人工)
 	* 
@@ -118,7 +118,7 @@ var Route = {
 		var current = that.getFragment();
 		var fn = function(){
 			//当当前url发生变化时，则进行check方法，进行回调
-			if( current ! = that.getFragment()){
+			if( current != that.getFragment()){
 				current  = that.getFragment();
 				that.check(current);
 			}
