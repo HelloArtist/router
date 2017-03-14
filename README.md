@@ -4,7 +4,7 @@
 使用 angular、reat、vue，我们都习惯了使用它们的路由，而在一般的单页项目，其实我们可以自己实现一个路由组件的。   
 下面我们来设计一个路由组件   
 
-## 基础知识
+## 路由基础知识
 单页应用会通过url后的井号 `#`来管理路由。   
 在设计路由组件之前，我们先来了解一下基础的知识   
 
@@ -25,6 +25,37 @@
 
 **onhashChange**   
 html5的新特性，井号改变时会触发该事件。对于不支持这个属性的，可以通过 `setInterval`监控 `location.hash`的变化   
+
+## history API基础知识
+`window.history`表示window对象的历史记录，它提供对浏览器历史记录的访问能力。   
+
+`window.history.back()`实现在浏览器中后退， `window.history.forward()`则是前进。    
+通过 `window.history.go(index)`，可以从当前回话的历史记录中加载页面：0是当前页面，-1是上一页，1是下一页。  
+
+**修改历史记录点**   
+1.存储当前历史记录点。history的存储方式类似于数组的入栈(`array.push`)，在里面新增一个历史记录可以这样写：  
+
+```
+// 当前的url为：http://x.guanmac.com
+
+var json={time:new Date().getTime()};
+
+// @状态对象：记录历史记录点的额外对象，可以为空
+// @页面标题：目前所有浏览器都不支持
+// @可选的url：浏览器不会检查url是否存在，只改变url，url必须同域，不能跨域
+
+window.history.pushState(json,"","http://x.guanmac.com/post-1.html");
+
+```
+
+2.替换当前历史记录点   
+
+`window.history.replaceState`和 `window.history.pushState`类似，不同的是 `widow.history.replaceStaet`不会新增历史记录点。  
+
+3.监听历史记录点   
+
+监听url的hash部分，可以使用HTML5的新api:`onhashchange`。
+
 
 ## 动手
 在动手之前，我们先来确定一下这个路由可以实现的功能：   
